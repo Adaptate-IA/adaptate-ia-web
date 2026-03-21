@@ -1,0 +1,25 @@
+# Adaptate IA
+
+> Empresa chilena que diseña y desarrolla agentes de inteligencia artificial a medida para negocios. Operamos desde Santiago de Chile.
+
+Adaptate IA construye agentes de IA personalizados para empresas que quieren automatizar procesos, reducir trabajo repetitivo y escalar sin contratar más personas. Cada agente se integra a los sistemas existentes del cliente y opera de forma autónoma 24/7. La filosofía de la empresa se basa en la adaptación al cambio: "No sobrevive el más fuerte ni el más inteligente, sino el que mejor se adapta al cambio."
+
+## Servicio
+
+Desarrollo de agentes de IA a medida en tres etapas:
+1. El cliente describe el proceso que quiere automatizar.
+2. Adaptate IA diseña el agente: alcance, integraciones y flujo de trabajo.
+3. El agente se entrega funcionando en los sistemas del cliente, con capacitación y soporte.
+
+## Para quién
+
+Empresas en Chile y Latinoamérica que tienen procesos manuales, repetitivos o que escalan mal con el equipo actual. No se requieren conocimientos técnicos para trabajar con Adaptate IA.
+
+## Empresa
+
+- [Inicio](https://adaptateia.cl): Página principal con información del servicio y formulario de contacto.
+
+## Contacto
+
+- Formulario de contacto: https://adaptateia.cl/#contact-form
+- Email: hola@adaptateia.cl

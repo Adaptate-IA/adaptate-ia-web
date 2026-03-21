@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
+@theme {
+  --color-void: #0a0a0a;
+  --color-charcoal: #1a1a1a;
+  --color-graphite: #2a2a2a;
+  --color-stone: #555555;
+  --color-ash: #888888;
+  --color-warm-white: #f0efe9;
+  --font-family-mono: var(--font-mono), monospace;
+  --font-family-sans: var(--font-sans), sans-serif;
+  --font-size-hero: clamp(2.8rem, 7vw, 6rem);
+  --font-size-section: clamp(1.8rem, 4vw, 3rem);
+  --font-size-tag: 0.7rem;
+  --radius: 6px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --void: #0a0a0a;
+  --charcoal: #1a1a1a;
+  --graphite: #2a2a2a;
+  --stone: #555555;
+  --ash: #888888;
+  --warm-white: #f0efe9;
+  --pure-white: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--void);
+  color: var(--warm-white);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* Section tag style */
+.section-tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem;
+}
+
+/* Input base styles */
+input, textarea, select {
+  background-color: var(--charcoal);
+  border: 1px solid var(--graphite);
+  color: var(--warm-white);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--stone);
+}
+
+select option {
+  background-color: var(--charcoal);
+  color: var(--warm-white);
+}
+
+/* Scroll reveal animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.fade-up-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button focus-visible for keyboard navigation */
+button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Balance headings for better typography — exclude h1 to respect explicit <br /> */
+h2, h3 {
+  text-wrap: balance;
 }
