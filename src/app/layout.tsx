@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   description:
     'Desarrollamos agentes de IA a medida para tu empresa en Chile. Automatiza procesos, reduce errores y escala tu equipo sin contratar más personas.',
   metadataBase: new URL('https://adaptateia.cl'),
-  alternates: { canonical: 'https://adaptateia.cl' },
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'es_CL',

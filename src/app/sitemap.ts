@@ -4,6 +4,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://adaptateia.cl';
   return [
     { url: baseUrl, lastModified: new Date(), priority: 1 },
-    { url: `${baseUrl}/industrias/legal`, lastModified: new Date(), priority: 0.9 },
+    { url: `${baseUrl}/privacy`, lastModified: new Date(), priority: 0.3 },
+    { url: `${baseUrl}/terms`, lastModified: new Date(), priority: 0.3 },
   ];
 }
