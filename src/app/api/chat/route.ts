@@ -1,6 +1,39 @@
 import { anthropic } from '@ai-sdk/anthropic';
 import { convertToModelMessages, streamText, stepCountIs, UIMessage } from 'ai';
 import { z } from 'zod';
+import { headers } from 'next/headers';
+
+// Simple in-memory rate limiter with two windows (single-instance deployments).
+// For multi-instance/edge deployments, replace with Upstash Redis.
+const RATE_LIMITS = [
+  { windowMs: 10_000, max: 3 },  // burst:     3 messages per 10 seconds
+  { windowMs: 60_000, max: 10 }, // sustained: 10 messages per minute
+] as const;
+
+type RateLimitStore = Map<string, { count: number; resetAt: number }>;
+const rateLimitStores: RateLimitStore[] = RATE_LIMITS.map(() => new Map());
+
+function checkRateLimit(ip: string): { limited: boolean; retryAfter: number } {
+  const now = Date.now();
+  for (let i = 0; i < RATE_LIMITS.length; i++) {
+    const { windowMs, max } = RATE_LIMITS[i];
+    const store = rateLimitStores[i];
+    const entry = store.get(ip);
+    if (!entry || now > entry.resetAt) {
+      store.set(ip, { count: 1, resetAt: now + windowMs });
+      continue;
+    }
+    if (entry.count >= max) {
+      return { limited: true, retryAfter: Math.ceil((entry.resetAt - now) / 1000) };
+    }
+    entry.count++;
+  }
+  return { limited: false, retryAfter: 0 };
+}
+
+const bodySchema = z.object({
+  messages: z.array(z.unknown()).min(1).max(50),
+});
 
 const SYSTEM_PROMPT = `
 Eres el asistente de Adaptate IA, una empresa chilena que diseña y desarrolla agentes de IA a medida para negocios.
@@ -36,7 +69,29 @@ Cuando alguien quiera cotizar o muestre interés:
 `;
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json();
+  const headersList = await headers();
+  const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+
+  const { limited, retryAfter } = checkRateLimit(ip);
+  if (limited) {
+    return new Response(JSON.stringify({ error: 'Too many requests' }), {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': String(retryAfter),
+      },
+    });
+  }
+
+  const body = await req.json();
+  const parsed = bodySchema.safeParse(body);
+  if (!parsed.success) {
+    return new Response(JSON.stringify({ error: 'Invalid request' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  const { messages } = parsed.data as { messages: UIMessage[] };
 
   const result = streamText({
     model: anthropic('claude-haiku-4-5-20251001'),
