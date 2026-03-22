@@ -42,3 +42,7 @@ next-env.d.ts
 
 /.claude
 /.agents
+
+# Local dev files
+IMPLEMENTATION_GUIDE.md
+skills-lock.json
