@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@copilotkit/react-core', '@copilotkit/react-ui', '@copilotkit/runtime'],
+  transpilePackages: ['streamdown', '@streamdown/code'],
   async rewrites() {
     return [
       {

@@ -10,7 +10,7 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const serviceAdapter = new AnthropicAdapter({
   anthropic,
-  model: 'claude-sonnet-4-5-20250929',
+  model: 'claude-3-5-haiku-20241022',
 });
 
 const runtime = new CopilotRuntime();
