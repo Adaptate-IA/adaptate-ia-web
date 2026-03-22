@@ -12,10 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { cjk } from "@streamdown/cjk";
 import { code } from "@streamdown/code";
-import { math } from "@streamdown/math";
-import { mermaid } from "@streamdown/mermaid";
 import type { UIMessage } from "ai";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
@@ -321,19 +318,43 @@ export const MessageBranchPage = ({
 
 export type MessageResponseProps = ComponentProps<typeof Streamdown>;
 
-const streamdownPlugins = { cjk, code, math, mermaid };
+// Load heavy plugins lazily — code is always needed, the rest load in the
+// background and will be ready well before users typically need them.
+const heavyPluginsPromise =
+  typeof window !== 'undefined'
+    ? Promise.all([
+        import('@streamdown/cjk').then((m) => m.cjk),
+        import('@streamdown/math').then((m) => m.math),
+        import('@streamdown/mermaid').then((m) => m.mermaid),
+      ])
+    : null;
+
+function useStreamdownPlugins() {
+  const [plugins, setPlugins] = useState<Record<string, unknown>>({ code });
+
+  useEffect(() => {
+    heavyPluginsPromise?.then(([cjk, math, mermaid]) => {
+      setPlugins({ code, cjk, math, mermaid });
+    });
+  }, []);
+
+  return plugins;
+}
 
 export const MessageResponse = memo(
-  ({ className, ...props }: MessageResponseProps) => (
-    <Streamdown
-      className={cn(
-        "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
-        className
-      )}
-      plugins={streamdownPlugins}
-      {...props}
-    />
-  ),
+  ({ className, ...props }: MessageResponseProps) => {
+    const plugins = useStreamdownPlugins();
+    return (
+      <Streamdown
+        className={cn(
+          "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+          className
+        )}
+        plugins={plugins}
+        {...props}
+      />
+    );
+  },
   (prevProps, nextProps) =>
     prevProps.children === nextProps.children &&
     nextProps.isAnimating === prevProps.isAnimating

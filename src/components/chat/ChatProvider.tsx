@@ -3,6 +3,7 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import { Fragment } from 'react';
+import { cn } from '@/lib/utils';
 import {
   Conversation,
   ConversationContent,
@@ -38,8 +39,11 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     async onToolCall({ toolCall: rawToolCall }) {
       if (rawToolCall.dynamic) return;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const toolCall = rawToolCall as any;
+      const toolCall = rawToolCall as unknown as {
+        toolName: string;
+        toolCallId: string;
+        args: Record<string, string>;
+      };
 
       if (toolCall.toolName === 'navigateToSection') {
         document.getElementById(toolCall.args.sectionId)?.scrollIntoView({ behavior: 'smooth' });
@@ -71,72 +75,26 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        top: '4.375rem',
-        right: 0,
-        height: 'calc(100dvh - 4.375rem)',
-        width: 'min(400px, 100vw)',
-        background: '#0a0a0a',
-        borderLeft: '1px solid #2a2a2a',
-        zIndex: 50,
-        transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
-        transition: 'transform 0.3s ease',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+      className={cn(
+        'fixed right-0 top-[4.375rem] h-[calc(100dvh-4.375rem)] w-[min(400px,100vw)]',
+        'bg-[#0a0a0a] border-l border-[#2a2a2a] z-50',
+        'flex flex-col transition-transform duration-300 ease-in-out',
+        isOpen ? 'translate-x-0' : 'translate-x-full',
+      )}
       aria-hidden={!isOpen}
     >
       {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0.75rem 1.25rem',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ color: '#ffffff', fontSize: '0.9rem' }}>✦</span>
-          <span
-            style={{
-              fontSize: '0.7rem',
-              color: 'rgba(255,255,255,0.4)',
-              fontFamily: 'monospace',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-            }}
-          >
+      <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06] shrink-0">
+        <div className="flex items-center gap-2">
+          <span className="text-white text-[0.9rem]" aria-hidden="true">✦</span>
+          <span className="text-[0.7rem] text-white/40 font-mono tracking-[0.2em] uppercase">
             Adaptate IA
           </span>
         </div>
         <button
           onClick={() => setIsOpen(false)}
           aria-label="Cerrar asistente"
-          style={{
-            background: 'none',
-            border: '1px solid rgba(255,255,255,0.1)',
-            color: 'rgba(255,255,255,0.4)',
-            cursor: 'pointer',
-            fontSize: '0.75rem',
-            lineHeight: 1,
-            padding: '0.3rem 0.5rem',
-            borderRadius: '4px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'border-color 0.2s, color 0.2s',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-            e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
-            e.currentTarget.style.color = 'rgba(255,255,255,0.4)';
-          }}
+          className="bg-transparent border border-white/10 text-white/40 cursor-pointer text-xs leading-none px-2 py-1.5 rounded flex items-center justify-center transition-[border-color,color] duration-200 hover:border-white/30 hover:text-white/80"
         >
           ✕
         </button>
@@ -147,7 +105,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
           <ConversationContent className="px-2 py-5 gap-4">
             {messages.length === 0 && (
               <div className="flex flex-col gap-4">
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+                <p className="text-white/70 text-[0.9rem] leading-[1.6]">
                   Hola. Soy el asistente de Adaptate IA. Puedo contarte sobre nuestros servicios,
                   ayudarte a solicitar una cotización, o navegar la página por ti. ¿En qué te puedo
                   ayudar?
@@ -180,13 +138,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
         </Conversation>
 
       {/* Input */}
-      <div
-        style={{
-          padding: '0.75rem 1rem',
-          borderTop: '1px solid rgba(255,255,255,0.06)',
-          flexShrink: 0,
-        }}
-      >
+      <div className="px-4 py-3 border-t border-white/[0.06] shrink-0">
         <PromptInput onSubmit={handleSubmit} className="relative">
           <PromptInputTextarea
             placeholder="Escribe aquí..."
