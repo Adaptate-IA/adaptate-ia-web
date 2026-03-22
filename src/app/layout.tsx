@@ -60,6 +60,10 @@ const organizationJsonLd = {
     'Automatización con IA en Chile',
   ],
   slogan: 'No sobrevive el más fuerte, sino el que mejor se adapta al cambio',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://adaptateia.cl/images/logo.png',
+  },
   foundingLocation: {
     '@type': 'Place',
     address: {
