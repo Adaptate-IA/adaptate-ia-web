@@ -15,7 +15,7 @@ const steps = [
     number: '03',
     title: 'Lo entregamos funcionando',
     description:
-      'El agente queda operando en tus sistemas. Te capacitamos, te damos soporte y lo ajustamos hasta que funcione exactamente como necesitas.',
+      'En 5 a 10 días el agente queda operando en tus sistemas. Te capacitamos, te damos soporte y lo ajustamos hasta que funcione exactamente como necesitas.',
   },
 ];
 
@@ -80,6 +80,16 @@ export function Process() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-12 text-center md:text-right">
+          <a
+            href="#contact-form"
+            className="font-mono text-sm tracking-widest hover:opacity-70"
+            style={{ color: '#f0efe9', transition: 'opacity 0.2s' }}
+          >
+            ¿Qué quieres automatizar primero? →
+          </a>
         </div>
       </div>
     </section>
