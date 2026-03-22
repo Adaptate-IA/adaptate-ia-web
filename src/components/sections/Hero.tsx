@@ -22,7 +22,7 @@ export function Hero() {
       <div className="max-w-6xl mx-auto w-full py-24 relative">
         <p
           className="font-mono mb-8"
-          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#555555' }}
+          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
           // DESARROLLO DE AGENTES DE IA
         </p>
@@ -67,7 +67,7 @@ export function Hero() {
 
         {/* Darwin quote — desktop only */}
         <div className="hidden md:block absolute bottom-12 right-0 max-w-xs text-right">
-          <p className="text-xs italic leading-relaxed" style={{ color: '#555555' }}>
+          <p className="text-xs italic leading-relaxed" style={{ color: '#767676' }}>
             &ldquo;No sobrevive el más fuerte ni el más inteligente, sino el que
             mejor se adapta al cambio.&rdquo;
           </p>

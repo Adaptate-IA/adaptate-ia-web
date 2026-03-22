@@ -26,7 +26,7 @@ export function CTA() {
       <div className="relative max-w-4xl mx-auto text-center">
         <p
           className="font-mono mb-6"
-          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#555555' }}
+          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
           // LA ÚNICA CONSTANTE ES EL CAMBIO
         </p>
