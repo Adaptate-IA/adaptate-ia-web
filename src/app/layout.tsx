@@ -4,6 +4,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { CopilotProvider } from '@/components/copilot/CopilotProvider';
 import './globals.css';
 
 const spaceMono = Space_Mono({
@@ -95,9 +96,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <SkipLink />
 
-        <Navbar />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <CopilotProvider>
+          <Navbar />
+          <main id="main-content">{children}</main>
+          <Footer />
+        </CopilotProvider>
       </body>
     </html>
   );

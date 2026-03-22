@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { CopilotActions } from '@/components/copilot/CopilotActions';
 
 const inputStyle = {
   background: '#1a1a1a',
@@ -60,6 +61,8 @@ export function QuoteForm() {
 
 
   return (
+    <>
+      <CopilotActions formData={formData} setFormData={setFormData} />
     <section
       id="contact-form"
       className="py-24 px-6"
@@ -195,5 +198,6 @@ export function QuoteForm() {
         )}
       </div>
     </section>
+    </>
   );
 }
