@@ -47,7 +47,7 @@ export function ChatSidebar({ children }: { children: React.ReactNode }) {
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
         >
-          ✦
+          <span aria-hidden="true">✦</span>
         </button>
       )}
 

@@ -2,7 +2,7 @@
 
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
-import { Fragment } from 'react';
+import { Fragment, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import {
   Conversation,
@@ -63,6 +63,45 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
   });
 
   const isLoading = status === 'streaming' || status === 'submitted';
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Focus trap: keep focus inside the panel while it's open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    // Move focus into the panel when it opens
+    const firstFocusable = panel.querySelector<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    firstFocusable?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.closest('[aria-hidden="true"]'));
+
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   const handleSubmit = (message: PromptInputMessage) => {
     if (!message.text?.trim() || isLoading) return;
@@ -75,6 +114,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
 
   return (
     <div
+      ref={panelRef}
       className={cn(
         'fixed right-0 top-[4.375rem] h-[calc(100dvh-4.375rem)] w-[min(400px,100vw)]',
         'bg-[#0a0a0a] border-l border-[#2a2a2a] z-50',
@@ -96,7 +136,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatPanelProps) {
           aria-label="Cerrar asistente"
           className="bg-transparent border border-white/10 text-white/40 cursor-pointer text-xs leading-none px-2 py-1.5 rounded flex items-center justify-center transition-[border-color,color] duration-200 hover:border-white/30 hover:text-white/80"
         >
-          ✕
+          <span aria-hidden="true">✕</span>
         </button>
       </div>
 

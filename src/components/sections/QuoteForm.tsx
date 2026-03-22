@@ -75,7 +75,7 @@ export function QuoteForm() {
       <div className="max-w-2xl mx-auto">
         <p
           className="font-mono mb-6"
-          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#555555' }}
+          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
           // EMPIEZA AQUÍ
         </p>
@@ -90,7 +90,7 @@ export function QuoteForm() {
         >
           ¿Qué quieres automatizar?
         </h2>
-        <p className="mb-10" style={{ color: '#555555', lineHeight: '1.7' }}>
+        <p className="mb-10" style={{ color: '#767676', lineHeight: '1.7' }}>
           Cuéntanos el problema. Te respondemos con una propuesta concreta en menos de 24 horas.
         </p>
 

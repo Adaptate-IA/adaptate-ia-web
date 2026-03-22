@@ -41,7 +41,7 @@ export function FAQ() {
       <div className="max-w-2xl mx-auto">
         <p
           className="font-mono mb-6"
-          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#555555' }}
+          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
           // PREGUNTAS FRECUENTES
         </p>

@@ -132,7 +132,7 @@ export default function TermsPage() {
         {/* Header */}
         <p
           className="font-mono mb-6"
-          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#555555' }}
+          style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
           // TÉRMINOS DE SERVICIO
         </p>
@@ -153,7 +153,7 @@ export default function TermsPage() {
         </p>
         <p
           className="mb-16 font-mono"
-          style={{ fontSize: '0.7rem', color: '#555555', letterSpacing: '0.1em' }}
+          style={{ fontSize: '0.7rem', color: '#767676', letterSpacing: '0.1em' }}
         >
           Última actualización: {lastUpdated}
         </p>
@@ -164,7 +164,7 @@ export default function TermsPage() {
             <div key={section.id} style={{ borderTop: '1px solid #2a2a2a' }} className="py-8">
               <p
                 className="font-mono mb-3"
-                style={{ fontSize: '0.65rem', letterSpacing: '0.15em', color: '#555555' }}
+                style={{ fontSize: '0.65rem', letterSpacing: '0.15em', color: '#767676' }}
               >
                 {section.id.padStart(2, '0')}
               </p>
@@ -194,7 +194,7 @@ export default function TermsPage() {
 
         {/* Footer note */}
         <div className="mt-16 pt-8" style={{ borderTop: '1px solid #1e1e1e' }}>
-          <p style={{ color: '#555555', fontSize: '0.8rem', lineHeight: '1.7' }}>
+          <p style={{ color: '#767676', fontSize: '0.8rem', lineHeight: '1.7' }}>
             ¿Tienes preguntas sobre estos términos?{' '}
             <a
               href="mailto:hola@adaptateia.cl"

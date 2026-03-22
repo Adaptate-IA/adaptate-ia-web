@@ -32,7 +32,7 @@ export function Process() {
           <div>
             <p
               className="font-mono mb-6"
-              style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#555555' }}
+              style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
             >
               // CÓMO FUNCIONA
             </p>
@@ -46,7 +46,7 @@ export function Process() {
               }}
             >
               Simple para ti.<br />
-              <span style={{ color: '#555555' }}>Complejo por dentro.</span>
+              <span style={{ color: '#767676' }}>Complejo por dentro.</span>
             </h2>
           </div>
 
@@ -61,7 +61,7 @@ export function Process() {
                 <div className="flex items-start gap-8">
                   <span
                     className="font-mono flex-shrink-0"
-                    style={{ fontSize: '0.7rem', color: '#555555', letterSpacing: '0.1em', paddingTop: '2px' }}
+                    style={{ fontSize: '0.7rem', color: '#767676', letterSpacing: '0.1em', paddingTop: '2px' }}
                   >
                     {step.number}
                   </span>
@@ -72,7 +72,7 @@ export function Process() {
                     >
                       {step.title}
                     </h3>
-                    <p style={{ fontSize: '0.875rem', color: '#666666', lineHeight: '1.65' }}>
+                    <p style={{ fontSize: '0.875rem', color: '#767676', lineHeight: '1.65' }}>
                       {step.description}
                     </p>
                   </div>

@@ -13,23 +13,23 @@ export function Footer() {
             <span style={{ color: '#ffffff' }}>ADAPTATE</span>
             <span style={{ color: '#888888' }}>.IA</span>
           </div>
-          <p className="text-sm" style={{ color: '#555555' }}>
+          <p className="text-sm" style={{ color: '#767676' }}>
             Santiago, Chile — Equipos de IA para negocios reales.
           </p>
         </div>
 
         <div className="flex items-center gap-6">
-          <a href="/privacy" className="text-xs font-mono tracking-wider" style={{ color: '#555555' }}>
+          <a href="/privacy" className="text-xs font-mono tracking-wider" style={{ color: '#767676' }}>
             PRIVACIDAD
           </a>
-          <a href="/terms" className="text-xs font-mono tracking-wider" style={{ color: '#555555' }}>
+          <a href="/terms" className="text-xs font-mono tracking-wider" style={{ color: '#767676' }}>
             TÉRMINOS
           </a>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto mt-8 pt-6" style={{ borderTop: '1px solid #1a1a1a' }}>
-        <p className="text-center font-mono text-xs" style={{ color: '#555555' }}>
+        <p className="text-center font-mono text-xs" style={{ color: '#767676' }}>
           © {new Date().getFullYear()} Adaptate IA. Todos los derechos reservados.
         </p>
       </div>

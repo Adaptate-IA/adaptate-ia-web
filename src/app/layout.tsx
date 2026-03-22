@@ -41,6 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image' },
   robots: { index: true, follow: true },
+  other: { 'theme-color': '#0a0a0a' },
 };
 
 const organizationJsonLd = {
