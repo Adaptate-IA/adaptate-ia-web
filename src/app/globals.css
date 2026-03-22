@@ -9,7 +9,7 @@
   --color-void: #0a0a0a;
   --color-charcoal: #1a1a1a;
   --color-graphite: #2a2a2a;
-  --color-stone: #555555;
+  --color-stone: #767676;
   --color-ash: #888888;
   --color-warm-white: #f0efe9;
   --font-family-mono: var(--font-mono), monospace;
@@ -24,7 +24,7 @@
   --void: #0a0a0a;
   --charcoal: #1a1a1a;
   --graphite: #2a2a2a;
-  --stone: #555555;
+  --stone: #767676;
   --ash: #888888;
   --warm-white: #f0efe9;
   --pure-white: #ffffff;
@@ -54,6 +54,14 @@
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+button, a, [role="button"] {
+  touch-action: manipulation;
 }
 
 /* ── Main page scrollbar ─────────────────────────────────────────────────── */
@@ -236,7 +244,7 @@ h2, h3 {
   --tw-prose-links: #c8b5f5;
   --tw-prose-bold: #ffffff;
   --tw-prose-counters: #888888;
-  --tw-prose-bullets: #555555;
+  --tw-prose-bullets: #767676;
   --tw-prose-hr: #2a2a2a;
   --tw-prose-quotes: #f0efe9;
   --tw-prose-quote-borders: #3a3a3a;
