@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { CopilotActions } from '@/components/copilot/CopilotActions';
+import { useState, useEffect } from 'react';
 
 const inputStyle = {
   background: '#1a1a1a',
@@ -44,6 +43,12 @@ export function QuoteForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
+  useEffect(() => {
+    const handler = (e: Event) => setFormData((e as CustomEvent).detail);
+    window.addEventListener('fill-quote-form', handler);
+    return () => window.removeEventListener('fill-quote-form', handler);
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -62,7 +67,6 @@ export function QuoteForm() {
 
   return (
     <>
-      <CopilotActions formData={formData} setFormData={setFormData} />
     <section
       id="contact-form"
       className="py-24 px-6"

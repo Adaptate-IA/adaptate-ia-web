@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@source "../node_modules/streamdown/dist/*.js";
+@source "../node_modules/@streamdown/code/dist/*.js";
+@source "../node_modules/@streamdown/cjk/dist/*.js";
+@source "../node_modules/@streamdown/math/dist/*.js";
+@source "../node_modules/@streamdown/mermaid/dist/*.js";
 
 @theme {
   --color-void: #0a0a0a;
@@ -23,10 +28,55 @@
   --ash: #888888;
   --warm-white: #f0efe9;
   --pure-white: #ffffff;
+
+  /* shadcn/ui CSS variables — dark theme for chat sidebar */
+  --background: 0 0% 4%;
+  --foreground: 40 14% 94%;
+  --card: 0 0% 10%;
+  --card-foreground: 40 14% 94%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 40 14% 94%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 16%;
+  --secondary-foreground: 40 14% 94%;
+  --muted: 0 0% 16%;
+  --muted-foreground: 0 0% 53%;
+  --accent: 0 0% 16%;
+  --accent-foreground: 40 14% 94%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 40 14% 94%;
+  --border: 0 0% 16%;
+  --input: 0 0% 16%;
+  --ring: 0 0% 83%;
+  --radius: 0.375rem;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* ── Main page scrollbar ─────────────────────────────────────────────────── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 html {
@@ -55,8 +105,10 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Input base styles */
-input, textarea, select {
+/* Input base styles — exclude shadcn/ai-elements controlled inputs */
+input:not([data-slot="input-group-control"]),
+textarea:not([data-slot="input-group-control"]),
+select {
   background-color: var(--charcoal);
   border: 1px solid var(--graphite);
   color: var(--warm-white);
@@ -68,12 +120,16 @@ input, textarea, select {
   transition: border-color 0.3s;
 }
 
-input:focus, textarea:focus, select:focus {
+input:not([data-slot="input-group-control"]):focus,
+textarea:not([data-slot="input-group-control"]):focus,
+select:focus {
   outline: none;
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-input:focus-visible, textarea:focus-visible, select:focus-visible {
+input:not([data-slot="input-group-control"]):focus-visible,
+textarea:not([data-slot="input-group-control"]):focus-visible,
+select:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.4);
   outline-offset: 2px;
   border-color: rgba(255, 255, 255, 0.4);
@@ -138,112 +194,59 @@ h2, h3 {
   text-wrap: balance;
 }
 
-/* ── CopilotKit theme overrides ──────────────────────────────────────────── */
-:root {
-  /* primary-color = user message bubble background */
-  --copilot-kit-primary-color: #2a2a2a;
-  /* contrast-color = text inside user bubble */
-  --copilot-kit-contrast-color: #f0efe9;
-  /* secondary-contrast-color = assistant message text */
-  --copilot-kit-secondary-contrast-color: #f0efe9;
-  --copilot-kit-background-color: #0a0a0a;
-  --copilot-kit-input-background-color: #1a1a1a;
-  --copilot-kit-muted-color: #555555;
-  --copilot-kit-separator-color: #2a2a2a;
+/* ── Chat typing indicator ───────────────────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
 }
 
-/* Full panel background & font — flex column so messages scroll and input stays pinned */
-.copilotKitWindow,
-.copilot-chat-panel {
-  background-color: #0a0a0a !important;
-  color: #f0efe9 !important;
-  font-family: var(--font-sans), sans-serif !important;
-  flex: 1 !important;
-  min-height: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-}
-
-/* Messages area scrolls, input stays pinned */
-.copilotKitMessages {
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
-}
-
-.copilotKitInputContainer,
-.copilotKitInputControls {
-  flex-shrink: 0 !important;
-}
-
-/* Header */
-.copilotKitHeader {
-  background-color: #0a0a0a !important;
-  border-bottom: 1px solid #2a2a2a !important;
-  color: #f0efe9 !important;
-  font-family: var(--font-mono), monospace !important;
-  font-size: 0.7rem !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-}
-
-/* Assistant message — transparent, blends with panel background */
-.copilotKitMessage.copilotKitAssistantMessage {
-  background: transparent !important;
-  border: none !important;
-  color: #f0efe9 !important;
-  padding-left: 0 !important;
-}
-
-/* User message — dark bubble with subtle border */
-.copilotKitMessage.copilotKitUserMessage {
-  background-color: #2a2a2a !important;
-  border: 1px solid #3a3a3a !important;
-  color: #f0efe9 !important;
-  border-radius: 6px !important;
-}
-
-/* Messages scroll area */
-.copilotKitMessages {
-  background-color: #0a0a0a !important;
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
+/* ── Chat scrollbar ──────────────────────────────────────────────────────── */
+.chat-scroll [data-radix-scroll-area-viewport],
+.chat-scroll [style*="overflow"] {
   overscroll-behavior: contain !important;
 }
 
-/* Input container */
-.copilotKitInputContainer,
-.copilotKitInputControls {
-  background-color: #0a0a0a !important;
-  border-top: 1px solid #2a2a2a !important;
+.chat-scroll * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
-/* Textarea */
-.copilotKitInput > textarea {
-  background-color: #1a1a1a !important;
-  border: 1px solid #2a2a2a !important;
-  color: #f0efe9 !important;
-  border-radius: 6px !important;
-  font-family: var(--font-sans), sans-serif !important;
+.chat-scroll *::-webkit-scrollbar {
+  width: 4px;
 }
 
-.copilotKitInput > textarea:focus {
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  outline: none !important;
+.chat-scroll *::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.copilotKitInput > textarea::placeholder {
-  color: #555555 !important;
+.chat-scroll *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
 }
 
-/* Send button */
-.copilotKitInputControlButton:not([disabled]) {
-  color: #f0efe9 !important;
+.chat-scroll *::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
-/* Hide "Powered by CopilotKit" text — .poweredByContainer is the input wrapper, don't hide it */
-.poweredBy {
-  display: none !important;
+/* ── Streamdown dark mode overrides (chat sidebar) ───────────────────────── */
+.chat-message-assistant .prose {
+  --tw-prose-body: #f0efe9;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-lead: #d0cfca;
+  --tw-prose-links: #c8b5f5;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-counters: #888888;
+  --tw-prose-bullets: #555555;
+  --tw-prose-hr: #2a2a2a;
+  --tw-prose-quotes: #f0efe9;
+  --tw-prose-quote-borders: #3a3a3a;
+  --tw-prose-captions: #888888;
+  --tw-prose-code: #f0efe9;
+  --tw-prose-pre-code: #f0efe9;
+  --tw-prose-pre-bg: #1a1a1a;
+  --tw-prose-th-borders: #2a2a2a;
+  --tw-prose-td-borders: #2a2a2a;
+  color: #f0efe9;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
