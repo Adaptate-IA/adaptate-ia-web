@@ -24,7 +24,7 @@ export function Hero() {
           className="font-mono mb-8"
           style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
-          // DESARROLLO DE AGENTES DE IA
+          // PARA EMPRESAS QUE NO QUIEREN QUEDARSE ATRÁS
         </p>
 
         <h1
@@ -41,15 +41,21 @@ export function Hero() {
         </h1>
 
         <p
-          className="text-lg leading-relaxed mb-10"
+          className="text-lg leading-relaxed mb-3"
           style={{
             color: '#888888',
             maxWidth: '520px',
             lineHeight: '1.7',
           }}
         >
-          Diseñamos y desarrollamos agentes de IA a medida para tu empresa.
-          Conectados a tus sistemas, trabajando solos, disponibles 24/7.
+          Tu equipo se ocupa de crecer. El agente responde clientes, procesa documentos y califica leads — 24/7, sin quejarse.
+        </p>
+
+        <p
+          className="font-mono mb-10"
+          style={{ fontSize: '0.75rem', color: '#767676', letterSpacing: '0.05em' }}
+        >
+          Cotización personalizada gratuita · Respuesta en menos de 24h
         </p>
 
         <a
@@ -71,10 +77,11 @@ export function Hero() {
             &ldquo;No sobrevive el más fuerte ni el más inteligente, sino el que
             mejor se adapta al cambio.&rdquo;
           </p>
-          <p className="font-mono text-xs mt-2 tracking-widest" style={{ color: '#444444' }}>
+          <p className="font-mono text-xs mt-2 tracking-widest" style={{ color: '#767676' }}>
             — CHARLES DARWIN
           </p>
         </div>
+
       </div>
     </section>
   );

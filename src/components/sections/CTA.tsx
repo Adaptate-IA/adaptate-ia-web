@@ -28,7 +28,7 @@ export function CTA() {
           className="font-mono mb-6"
           style={{ fontSize: '0.7rem', letterSpacing: '0.2em', color: '#767676' }}
         >
-          // LA ÚNICA CONSTANTE ES EL CAMBIO
+          // EL MEJOR MOMENTO FUE AYER
         </p>
         <h2
           className="font-bold mb-8"
@@ -51,15 +51,15 @@ export function CTA() {
         </p>
         <a
           href="#contact-form"
-          className="inline-flex items-center justify-center font-mono text-sm font-bold tracking-widest uppercase px-10 py-5"
+          className="inline-flex items-center justify-center font-mono text-sm font-bold tracking-widest uppercase px-10 py-5 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           style={{
             background: '#ffffff',
             color: '#0a0a0a',
             borderRadius: '6px',
-            transition: 'transform 0.3s',
+            transition: 'transform 0.2s',
           }}
         >
-          QUIERO ADAPTARME →
+          QUIERO MI COTIZACIÓN GRATIS →
         </a>
       </div>
     </section>
