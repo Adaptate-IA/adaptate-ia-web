@@ -202,6 +202,11 @@ h2, h3 {
   text-wrap: balance;
 }
 
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── Chat typing indicator ───────────────────────────────────────────────── */
 @keyframes pulse {
   0%, 100% { opacity: 0.3; transform: scale(1); }

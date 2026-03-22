@@ -15,6 +15,11 @@ const inputStyle = {
   outline: 'none',
 };
 
+const inputErrorStyle = {
+  ...inputStyle,
+  border: '1px solid rgba(239,68,68,0.6)',
+};
+
 const labelStyle = {
   display: 'block',
   fontFamily: "'Space Mono', monospace",
@@ -32,15 +37,23 @@ interface FormData {
   problem: string;
 }
 
-const initialFormData: FormData = {
-  name: '',
-  email: '',
-  company: '',
-  problem: '',
-};
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
+const initialFormData: FormData = { name: '', email: '', company: '', problem: '' };
+
+function validateField(name: keyof FormData, value: string): string | undefined {
+  if (name === 'name' && !value.trim()) return 'El nombre es requerido';
+  if (name === 'email') {
+    if (!value.trim()) return 'El email es requerido';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Email inválido';
+  }
+  if (name === 'problem' && !value.trim()) return 'Cuéntanos qué quieres automatizar';
+  return undefined;
+}
 
 export function QuoteForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
   useEffect(() => {
@@ -49,24 +62,46 @@ export function QuoteForm() {
     return () => window.removeEventListener('fill-quote-form', handler);
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error as user types
+    if (errors[name as keyof FormData]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const error = validateField(name as keyof FormData, value);
+    if (error) setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Validate all required fields before submit
+    const newErrors: FormErrors = {};
+    (['name', 'email', 'problem'] as (keyof FormData)[]).forEach((field) => {
+      const error = validateField(field, formData[field]);
+      if (error) newErrors[field] = error;
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Focus first invalid field
+      const firstErrorField = Object.keys(newErrors)[0];
+      document.getElementById(firstErrorField)?.focus();
+      return;
+    }
+
     setStatus('sending');
     await new Promise((resolve) => setTimeout(resolve, 800));
     setStatus('sent');
     setFormData(initialFormData);
+    setErrors({});
   };
 
-
   return (
-    <>
     <section
       id="contact-form"
       className="py-24 px-6"
@@ -90,8 +125,11 @@ export function QuoteForm() {
         >
           ¿Qué quieres automatizar?
         </h2>
-        <p className="mb-10" style={{ color: '#767676', lineHeight: '1.7' }}>
+        <p className="mb-2" style={{ color: '#767676', lineHeight: '1.7' }}>
           Cuéntanos el problema. Te respondemos con una propuesta concreta en menos de 24 horas.
+        </p>
+        <p className="font-mono mb-10" style={{ fontSize: '0.75rem', color: '#767676', letterSpacing: '0.05em' }}>
+          Cotización gratuita · Sin compromiso
         </p>
 
         <div aria-live="polite" aria-atomic="true" className="sr-only">
@@ -104,18 +142,22 @@ export function QuoteForm() {
             className="p-10 text-center"
             style={{ background: '#1a1a1a', border: '1px solid #ffffff', borderRadius: '6px' }}
           >
-            <p className="font-mono text-xs tracking-widest mb-4" style={{ color: '#888888' }}>
+            <p className="font-mono text-xs tracking-widest mb-4" style={{ color: '#767676' }}>
               // RECIBIDO
             </p>
             <h3 className="text-2xl font-bold mb-3" style={{ color: '#f0efe9' }}>
-              Nos ponemos en contacto pronto.
+              Revisamos tu caso y te respondemos en menos de 24 horas.
             </h3>
-            <p style={{ color: '#888888' }}>
-              Revisa tu email. Si no lo ves en 24 horas, escríbenos a hola@adaptateia.cl
+            <p className="mb-6" style={{ color: '#888888', lineHeight: '1.7' }}>
+              Recibirás una propuesta concreta — no un formulario genérico.
+              Si tienes dudas mientras tanto, el chat está disponible ahora mismo.
+            </p>
+            <p className="font-mono text-xs" style={{ color: '#767676', letterSpacing: '0.1em' }}>
+              hola@adaptateia.cl · Santiago de Chile
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="name" style={labelStyle}>Nombre *</label>
@@ -127,9 +169,17 @@ export function QuoteForm() {
                   autoComplete="name"
                   value={formData.name}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   placeholder="Juan Pérez"
-                  style={inputStyle}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
+                  style={errors.name ? inputErrorStyle : inputStyle}
                 />
+                {errors.name && (
+                  <p id="name-error" role="alert" style={{ color: 'rgb(239,68,68)', fontSize: '0.75rem', marginTop: '0.375rem' }}>
+                    {errors.name}
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="email" style={labelStyle}>Email *</label>
@@ -141,9 +191,17 @@ export function QuoteForm() {
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   placeholder="juan@empresa.cl"
-                  style={inputStyle}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
+                  style={errors.email ? inputErrorStyle : inputStyle}
                 />
+                {errors.email && (
+                  <p id="email-error" role="alert" style={{ color: 'rgb(239,68,68)', fontSize: '0.75rem', marginTop: '0.375rem' }}>
+                    {errors.email}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -172,9 +230,17 @@ export function QuoteForm() {
                 rows={4}
                 value={formData.problem}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Ej: Respondemos manualmente +50 emails al día con las mismas preguntas. Queremos que un agente lo haga solo..."
-                style={{ ...inputStyle, resize: 'vertical' }}
+                aria-invalid={!!errors.problem}
+                aria-describedby={errors.problem ? 'problem-error' : undefined}
+                style={errors.problem ? { ...inputStyle, resize: 'vertical', border: '1px solid rgba(239,68,68,0.6)' } : { ...inputStyle, resize: 'vertical' }}
               />
+              {errors.problem && (
+                <p id="problem-error" role="alert" style={{ color: 'rgb(239,68,68)', fontSize: '0.75rem', marginTop: '0.375rem' }}>
+                  {errors.problem}
+                </p>
+              )}
             </div>
 
             <button
@@ -182,7 +248,7 @@ export function QuoteForm() {
               disabled={status === 'sending'}
               style={{
                 width: '100%',
-                background: status === 'sending' ? '#555555' : '#ffffff',
+                background: status === 'sending' ? '#767676' : '#ffffff',
                 color: '#0a0a0a',
                 padding: '1rem',
                 fontFamily: "'Space Mono', monospace",
@@ -194,14 +260,30 @@ export function QuoteForm() {
                 border: 'none',
                 cursor: status === 'sending' ? 'not-allowed' : 'pointer',
                 transition: 'transform 0.3s, background 0.3s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
               }}
             >
-              {status === 'sending' ? 'Enviando…' : 'Quiero mi agente →'}
+              {status === 'sending' && (
+                <svg
+                  aria-hidden="true"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  style={{ animation: 'spin 0.8s linear infinite' }}
+                >
+                  <circle cx="8" cy="8" r="6" stroke="#0a0a0a" strokeOpacity="0.3" strokeWidth="2" />
+                  <path d="M14 8a6 6 0 0 0-6-6" stroke="#0a0a0a" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              )}
+              {status === 'sending' ? 'Enviando…' : 'Quiero mi cotización gratis →'}
             </button>
           </form>
         )}
       </div>
     </section>
-    </>
   );
 }
