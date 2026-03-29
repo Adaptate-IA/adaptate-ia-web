@@ -11,7 +11,7 @@ const sections = [
   {
     id: '1',
     title: 'Objeto',
-    content: `Estos Términos de Servicio regulan el uso del sitio web adaptateia.cl y la contratación de servicios de desarrollo de agentes de inteligencia artificial ofrecidos por Adaptate IA SpA (en adelante, "Adaptate IA").
+    content: `Estos Términos de Servicio regulan el uso del sitio web www.adaptateia.com y la contratación de servicios de desarrollo de agentes de inteligencia artificial ofrecidos por Adaptate IA SpA (en adelante, "Adaptate IA").
 
 Al usar este sitio o al contratar cualquiera de nuestros servicios, aceptas estos términos en su totalidad. Si no estás de acuerdo, te pedimos que no uses el sitio ni nuestros servicios.`,
   },
@@ -33,7 +33,7 @@ Las características, alcance y precio de cada servicio se definen en la propues
     title: 'Proceso de contratación',
     content: `La contratación de nuestros servicios sigue este proceso:
 
-1. El cliente envía una solicitud de cotización a través del formulario del sitio o por correo a hola@adaptateia.cl
+1. El cliente envía una solicitud de cotización a través del formulario del sitio o por correo a contacto@adaptateia.com
 2. Adaptate IA elabora y envía una propuesta personalizada dentro de las 24 horas hábiles siguientes
 3. El cliente acepta la propuesta (por correo electrónico o de forma escrita)
 4. Se acuerda el calendario de trabajo y las condiciones de pago
@@ -61,7 +61,7 @@ Adaptate IA se reserva el derecho de ajustar sus tarifas de referencia con previ
 — Si el proyecto no ha comenzado y el cliente desiste, se reembolsa el 100% de cualquier anticipo recibido
 — Si el agente entregado no cumple con las especificaciones acordadas en la propuesta, Adaptate IA se compromete a corregirlo sin costo adicional dentro de los 30 días siguientes a la entrega
 
-Entendemos que las circunstancias cambian. Si tienes una situación especial, contáctanos en hola@adaptateia.cl y buscamos una solución razonable.`,
+Entendemos que las circunstancias cambian. Si tienes una situación especial, contáctanos en contacto@adaptateia.com y buscamos una solución razonable.`,
   },
   {
     id: '6',
@@ -70,7 +70,7 @@ Entendemos que las circunstancias cambian. Si tienes una situación especial, co
 
 Adaptate IA retiene la propiedad sobre los componentes genéricos, metodologías, herramientas y código base reutilizable empleados en el desarrollo, los cuales no son específicos del cliente.
 
-El contenido del sitio web adaptateia.cl (textos, diseño, código) es propiedad de Adaptate IA SpA y no puede ser reproducido sin autorización escrita.`,
+El contenido del sitio web www.adaptateia.com (textos, diseño, código) es propiedad de Adaptate IA SpA y no puede ser reproducido sin autorización escrita.`,
   },
   {
     id: '7',
@@ -197,10 +197,10 @@ export default function TermsPage() {
           <p style={{ color: '#767676', fontSize: '0.8rem', lineHeight: '1.7' }}>
             ¿Tienes preguntas sobre estos términos?{' '}
             <a
-              href="mailto:hola@adaptateia.cl"
+              href="mailto:contacto@adaptateia.com"
               style={{ color: '#f0efe9', textDecoration: 'underline' }}
             >
-              hola@adaptateia.cl
+              contacto@adaptateia.com
             </a>
           </p>
         </div>
