@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description:
     'Desarrollamos agentes de IA a medida para tu empresa en Chile. Automatiza procesos, reduce errores y escala tu equipo sin contratar más personas.',
-  metadataBase: new URL('https://adaptateia.cl'),
+  metadataBase: new URL('https://www.adaptateia.com'),
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -50,8 +50,8 @@ const organizationJsonLd = {
   name: 'Adaptate IA',
   description:
     'Empresa chilena especializada en desarrollo de agentes de inteligencia artificial a medida para negocios. Automatización de procesos, integración con sistemas existentes.',
-  url: 'https://adaptateia.cl',
-  email: 'hola@adaptateia.cl',
+  url: 'https://www.adaptateia.com',
+  email: 'contacto@adaptateia.com',
   areaServed: ['Chile', 'Latinoamérica'],
   knowsAbout: [
     'Agentes de IA',
@@ -63,7 +63,7 @@ const organizationJsonLd = {
   slogan: 'No sobrevive el más fuerte, sino el que mejor se adapta al cambio',
   logo: {
     '@type': 'ImageObject',
-    url: 'https://adaptateia.cl/images/logo.png',
+    url: 'https://www.adaptateia.com/images/logo.png',
   },
   foundingLocation: {
     '@type': 'Place',
@@ -80,8 +80,8 @@ const localBusinessJsonLd = {
   '@type': 'LocalBusiness',
   name: 'Adaptate IA',
   description: 'Agentes de inteligencia artificial para negocios en Chile.',
-  url: 'https://adaptateia.cl',
-  email: 'hola@adaptateia.cl',
+  url: 'https://www.adaptateia.com',
+  email: 'contacto@adaptateia.com',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Santiago',

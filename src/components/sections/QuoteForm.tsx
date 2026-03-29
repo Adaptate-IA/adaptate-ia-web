@@ -153,7 +153,7 @@ export function QuoteForm() {
               Si tienes dudas mientras tanto, el chat está disponible ahora mismo.
             </p>
             <p className="font-mono text-xs" style={{ color: '#767676', letterSpacing: '0.1em' }}>
-              hola@adaptateia.cl · Santiago de Chile
+              contacto@adaptateia.com · Santiago de Chile
             </p>
           </div>
         ) : (
