@@ -15,6 +15,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'CCBot', disallow: '/' },
       { userAgent: '*', allow: '/' },
     ],
-    sitemap: 'https://adaptateia.cl/sitemap.xml',
+    sitemap: 'https://www.adaptateia.com/sitemap.xml',
   };
 }

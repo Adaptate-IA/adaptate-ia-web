@@ -16,7 +16,7 @@ const sections = [
 Razón social: Adaptate IA SpA
 RUT: [RUT: XX.XXX.XXX-X]
 Domicilio: [Dirección registrada], Santiago, Región Metropolitana, Chile
-Correo de contacto: hola@adaptateia.cl
+Correo de contacto: contacto@adaptateia.com
 
 En adelante, "Adaptate IA", "nosotros" o "la empresa".`,
   },
@@ -86,7 +86,7 @@ Puedes solicitar la eliminación anticipada de tus datos en cualquier momento.`,
 — Cancelar o eliminar tus datos cuando ya no sean necesarios
 — Oponerte al tratamiento de tus datos en determinadas circunstancias
 
-Para ejercer cualquiera de estos derechos, escríbenos a hola@adaptateia.cl con el asunto "Derechos ARCO". Respondemos dentro de los 15 días hábiles siguientes.`,
+Para ejercer cualquiera de estos derechos, escríbenos a contacto@adaptateia.com con el asunto "Derechos ARCO". Respondemos dentro de los 15 días hábiles siguientes.`,
   },
   {
     id: '8',
@@ -107,7 +107,7 @@ Si los cambios son relevantes, lo comunicaremos por correo electrónico a quiene
     title: 'Contacto',
     content: `Cualquier consulta sobre esta política o sobre el tratamiento de tus datos personales puedes dirigirla a:
 
-hola@adaptateia.cl
+contacto@adaptateia.com
 Adaptate IA SpA — Santiago, Chile`,
   },
 ];
@@ -186,10 +186,10 @@ export default function PrivacyPage() {
           <p style={{ color: '#767676', fontSize: '0.8rem', lineHeight: '1.7' }}>
             ¿Tienes dudas sobre esta política?{' '}
             <a
-              href="mailto:hola@adaptateia.cl"
+              href="mailto:contacto@adaptateia.com"
               style={{ color: '#f0efe9', textDecoration: 'underline' }}
             >
-              hola@adaptateia.cl
+              contacto@adaptateia.com
             </a>
           </p>
         </div>
